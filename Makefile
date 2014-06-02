@@ -5,10 +5,10 @@ SYSCONFDIR ?= $(INSTALLDIR)/etc
 LIBEXECDIR ?= $(INSTALLDIR)/lib/sigmavpn
 
 SODIUM_CPPFLAGS ?= -I$(SODIUMDIR)/include
-SODIUM_LDFLAGS ?= -L$(SODIUMDIR)/lib -lsodium -ldl
+SODIUM_LDFLAGS ?= -L$(SODIUMDIR)/lib -lsodium
 CFLAGS ?= -O2 -fPIC -Wall -Wextra
 CPPFLAGS += $(SODIUM_CPPFLAGS)
-LDFLAGS += $(SODIUM_LDFLAGS) -ldl -pthread -static
+LDFLAGS += $(SODIUM_LDFLAGS) -ldl -pthread
 DYLIB_CFLAGS ?= $(CFLAGS) -shared
 
 TARGETS_OBJS = dep/ini.o main.o modules.o naclkeypair.o types.o
@@ -51,11 +51,11 @@ intf/intf_udp.o: intf/intf_udp.c
 	$(STRIP) -s intf/intf_udp.o
 
 naclkeypair: naclkeypair.o
-	$(CC) $(LDFLAGS) -o naclkeypair naclkeypair.o $(SODIUM_LDFLAGS)
+	$(CC) $(LDFLAGS) $(SODIUM_LDFLAGS) -o naclkeypair naclkeypair.o
 	$(STRIP) -s naclkeypair
 
 sigmavpn: main.o modules.o types.o dep/ini.o
-	$(CC) $(LDFLAGS) -o sigmavpn main.o modules.o types.o dep/ini.o $(SODIUM_LDFLAGS)
+	$(CC) $(LDFLAGS) $(SODIUM_LDFLAGS) -o sigmavpn main.o modules.o types.o dep/ini.o
 	$(STRIP) -s sigmavpn
 
 %.o: %.c $(HEADERS)
