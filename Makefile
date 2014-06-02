@@ -32,18 +32,23 @@ install: all
 
 proto/proto_raw.o: proto/proto_raw.c
 	$(CC) $(CPPFLAGS) $(SODIUM_CPPFLAGS) $(DYLIB_CFLAGS) $(SODIUM_LDFLAGS) proto/proto_raw.c -o proto/proto_raw.o
+	$(STRIP) -s proto/proto_raw.o
 
 proto/proto_nacl0.o: proto/proto_nacl0.c types.o
 	$(CC) $(CPPFLAGS) $(SODIUM_CPPFLAGS) $(DYLIB_CFLAGS) $(SODIUM_LDFLAGS) proto/proto_nacl0.c types.o -o proto/proto_nacl0.o
+	$(STRIP) -s proto/proto_nacl0.o
 
 proto/proto_nacltai.o: proto/proto_nacltai.c types.o
 	$(CC) $(CPPFLAGS) $(SODIUM_CPPFLAGS) $(DYLIB_CFLAGS) $(SODIUM_LDFLAGS) proto/proto_nacltai.c types.o -o proto/proto_nacltai.o
+	$(STRIP) -s proto/proto_nacltai.o
 
 intf/intf_tuntap.o: intf/intf_tuntap.c
 	$(CC) $(CPPFLAGS) $(DYLIB_CFLAGS) intf/intf_tuntap.c -o intf/intf_tuntap.o
+	$(STRIP) -s intf/intf_tuntap.o
 
 intf/intf_udp.o: intf/intf_udp.c
 	$(CC) $(CPPFLAGS) $(DYLIB_CFLAGS) intf/intf_udp.c -o intf/intf_udp.o
+	$(STRIP) -s intf/intf_udp.o
 
 naclkeypair: naclkeypair.o
 	$(CC) $(LDFLAGS) -o naclkeypair naclkeypair.o $(SODIUM_LDFLAGS)
